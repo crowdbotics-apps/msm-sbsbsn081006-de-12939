@@ -1,8 +1,18 @@
 import axios from "axios"
 import {
   DSSLACKCONNECTOR1_USERNAME,
+  DSSLACKCONNECTOR1_PASSWORD,
+  DSSLACKCONNECTOR1_USERNAME,
   DSSLACKCONNECTOR1_PASSWORD
 } from "react-native-dotenv"
+const dSSlackConnector = axios.create({
+  baseURL: "https://api.spotify.com",
+  auth: {
+    username: DSSLACKCONNECTOR1_USERNAME,
+    password: DSSLACKCONNECTOR1_PASSWORD
+  },
+  headers: { Accept: "application/json", "Content-Type": "application/json" }
+})
 const dSSlackConnector = axios.create({
   baseURL: "https://api.spotify.com",
   auth: {
@@ -15,6 +25,11 @@ const msmSbsbsnAPI = axios.create({
   baseURL: "https://msm-sbsbsn081006-de-12939-prod.herokuapp.com/",
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 })
+function dsslackconnector1_get_v1_albums_list(action) {
+  return dSSlackConnector.get(`/v1/albums`, {
+    params: { ids: action.ids, market: action.market }
+  })
+}
 function dsslackconnector1_get_v1_albums_list(action) {
   return dSSlackConnector.get(`/v1/albums`, {
     params: { ids: action.ids, market: action.market }
@@ -96,6 +111,7 @@ function rest_auth_user_partial_update(action) {
   return msmSbsbsnAPI.patch(`/rest-auth/user/`, { data: action.data })
 }
 export const apiService = {
+  dsslackconnector1_get_v1_albums_list,
   dsslackconnector1_get_v1_albums_list,
   api_v1_customtext_list,
   api_v1_customtext_read,

@@ -10,6 +10,12 @@ export default function apiReducer(state = initialState, action) {
       return Object.assign({}, state, {
         dSSlackConnector: [...state.dSSlackConnector, action.response]
       })
+    case types.DSSLACKCONNECTOR1_GET_V1_ALBUMS_LIST:
+    case types.DSSLACKCONNECTOR1_GET_V1_ALBUMS_LIST_SUCCEEDED:
+    case types.DSSLACKCONNECTOR1_GET_V1_ALBUMS_LIST_FAILED:
+      return Object.assign({}, state, {
+        dSSlackConnector: [...state.dSSlackConnector, action.response]
+      })
     case types.API_V1_CUSTOMTEXT_LIST:
     case types.API_V1_CUSTOMTEXT_LIST_SUCCEEDED:
     case types.API_V1_CUSTOMTEXT_LIST_FAILED:

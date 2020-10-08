@@ -20,6 +20,25 @@ function* dsslackconnector1_get_v1_albums_listWatcher() {
     dsslackconnector1_get_v1_albums_listWorker
   )
 }
+function* dsslackconnector1_get_v1_albums_listWorker(action) {
+  try {
+    const result = yield call(
+      apiService.dsslackconnector1_get_v1_albums_list,
+      action
+    )
+    yield put(
+      actions.dsslackconnector1_get_v1_albums_listSucceeded(result, action)
+    )
+  } catch (err) {
+    yield put(actions.dsslackconnector1_get_v1_albums_listFailed(err, action))
+  }
+}
+function* dsslackconnector1_get_v1_albums_listWatcher() {
+  yield takeEvery(
+    types.DSSLACKCONNECTOR1_GET_V1_ALBUMS_LIST,
+    dsslackconnector1_get_v1_albums_listWorker
+  )
+}
 function* api_v1_customtext_listWorker(action) {
   try {
     const result = yield call(apiService.api_v1_customtext_list, action)
@@ -306,6 +325,7 @@ function* rest_auth_user_partial_updateWatcher() {
 }
 export default function* rootSaga() {
   const sagas = [
+    dsslackconnector1_get_v1_albums_listWatcher,
     dsslackconnector1_get_v1_albums_listWatcher,
     api_v1_customtext_listWatcher,
     api_v1_customtext_readWatcher,
